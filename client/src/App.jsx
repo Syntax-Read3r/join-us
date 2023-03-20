@@ -1,36 +1,30 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { render } from "../../server/app";
 
-class App extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = { apiResponse: "" };
-	}
+function App() {
+    const [apiResponse, setApiResponse] = useState("");
 
-	callAPI() {
-		fetch("http://localhost:9000/testAPI")
-			.then((res) => res.text)
-			.then((res) => this.setState({ apiResponse: res }));
-	}
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch("http://localhost:9000/testAPI");
+            const res = await response.text();
+            setApiResponse(res);
+		
+        }
+        fetchData();
+    }, []);
 
-	componentWillMount() {
-		this.callAPI;
-	}
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={reactLogo} alt="logo" className="App-logo" />
+            </header>
 
-	render() {
-		return (
-			<div className="App">
-				<header className="App-header">
-					<img src={logo} alt="logo" className="App-logo" />
-				</header>
-
-				<p>{this.state.apiResponse}</p>
-			</div>
-		);
-	}
+            <p>{apiResponse}</p>
+            <p>running</p>
+        </div>
+    );
 }
 
 export default App;
