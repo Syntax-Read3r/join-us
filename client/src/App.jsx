@@ -22,7 +22,7 @@ function App() {
             </header>
 
             <p>{apiResponse}</p>
-            <p>running</p>
+            <p>running...</p>
         </div>
     );
 }
